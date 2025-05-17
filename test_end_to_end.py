@@ -6,9 +6,10 @@ import asyncio
 import json
 from dataclasses import asdict
 
-topic = "creatine -impact on brain function"
+topic = "llm architecture"
 queries: List[str] = topic_to_queries(topic)
 hits: List[Hit] = asyncio.run(MetaSearcher().search(queries))
+
 
 # for testing
 def dump_hits_to_json(hits: List[Hit]) -> List[dict]:
