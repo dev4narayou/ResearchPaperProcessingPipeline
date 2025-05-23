@@ -38,7 +38,20 @@ These mockups show potential interfaces for:
 
 ![Architecture Flowchart](readme_assets/architecture_flowchart.png)
 
-### Pipeline Design
+### Semantic Filtering
+
+The pipeline uses a lightweight cross-encoder model for semantic relevance filtering:
+
+- **Model**: `cross-encoder/ms-marco-MiniLM-L6-v2` - a small, efficient model for semantic similarity
+- **Local Storage**: Model is cached locally in `models/cross-encoder-ms-marco-MiniLM-L6-v2`
+- **Fallback**: Downloads from HuggingFace if local model not found
+- **Usage**: Scores paper titles against search queries to filter irrelevant results
+- **Scoring**: Returns relevance scores from -3 to +8, with higher scores indicating better matches
+- **Threshold**: Papers scoring below a certain threshold are filtered out as not relevant enough
+
+This semantic filtering helps ensure that only truly relevant papers are processed, improving the quality of the research results.
+
+### Pipeline Design (can be tweaked, these values are just what worked here)
 
 The system uses **producer-consumer queues** with **async workers** for concurrent processing:
 
